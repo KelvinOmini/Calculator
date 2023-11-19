@@ -20,9 +20,17 @@ class Matrix:  # Define a class named Matrix for handling matrix operations.
             raise ValueError("Unsupported operation. Valid operations are '+', '-', '*', '/'.")  # Raise an error for unsupported operations.
 
         return result  # Return the computed result.
-
+    
+    @staticmethod
+    def is_square(matrix):
+        return len(matrix) == len(matrix[0])
+    
+    @staticmethod
+    def is_equal_dimensions(matrix1, matrix2):
+        return len(matrix1) == len(matrix2) and len(matrix1[0]) == len(matrix2[0])
+    
     def add(self):  # Method to perform matrix addition.
-        if len(self.matrix1) != len(self.matrix2) or len(self.matrix1[0]) != len(self.matrix2[0]):  # Check if matrices have compatible dimensions.
+        if not Matrix.is_equal_dimensions(self.matrix1, self.matrix2):  # Check if matrices have compatible dimensions.
             raise ValueError("Matrices must have the same dimensions for addition.")  # Raise an error for incompatible dimensions.
         
         result = []  # Initialize an empty list to store the result matrix.
@@ -91,8 +99,8 @@ def determinant(matrix):
         return matrix[0][0]
 
     # Base case: if the matrix is 2x2, return the determinant using the formula
-    if size == 2:
-        return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0]
+    # if size == 2:
+    #     return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0]
 
     # Initialize the determinant to 0
     det = 0
@@ -137,7 +145,7 @@ while True:
         matrix1 = get_matrix()
 
         # Check if the matrix is a square matrix before calculating determinant
-        if len(matrix1) != len(matrix1[0]):
+        if not Matrix.is_square(matrix1):
             print("Error: The matrix must be a square matrix to calculate the determinant.")
         else:
             # Calculate and print the determinant
